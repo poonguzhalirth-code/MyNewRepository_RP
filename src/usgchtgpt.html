@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <title>Curious Minds — Educational Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --ink: #1a1208;
+    --ink-muted: #5a4f3c;
+    --ink-faint: #8c7f6a;
+    --paper: #faf7f0;
+    --paper-warm: #f4edd8;
+    --paper-card: #fffef9;
+    --accent: #c4501a;
+    --accent-light: #f5e8df;
+    --accent-dark: #8b3510;
+    --teal: #1a6b6b;
+    --teal-light: #ddf0ef;
+    --border: #e2d9c5;
+    --border-strong: #c8b99a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* Masthead */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.015) 30px,
+      rgba(255,255,255,0.015) 31px
+    );
+  }
+  .masthead-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--paper-warm);
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    color: #fff;
+  }
+  .masthead h1 em {
+    color: #e88a5b;
+    font-style: italic;
+  }
+  .masthead-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
+  }
+  .nav-strip {
+    background: var(--accent);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav-strip a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.5rem;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .nav-strip a:hover { background: var(--accent-dark); }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Hero Article */
+  .hero-section {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .masthead h1 { font-size: 2.8rem; }
+  }
+  .hero-visual {
+    background: linear-gradient(135deg, #1a3a4a 0%, #0d1f2d 100%);
+    border-radius: 4px;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-visual svg { width: 90%; height: 90%; }
+  .tag {
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .tag-science { background: var(--teal-light); color: var(--teal); }
+  .tag-math { background: var(--accent-light); color: var(--accent-dark); }
+  .tag-history { background: #e8e0f0; color: #5a3a8a; }
+  .tag-tech { background: #dce8f5; color: #1a4a7a; }
+  .tag-culture { background: #fdebd0; color: #8a5a10; }
+
+  .hero-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+  .hero-text p { color: var(--ink-muted); margin-bottom: 1.25rem; }
+  .byline {
+    font-size: 13px;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .byline-dot { color: var(--border-strong); }
+  .read-more {
+    display: inline-block;
+    margin-top: 1.25rem;
+    padding: 10px 24px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .read-more:hover { background: var(--accent-dark); }
+
+  /* Section Title */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-top: 2px solid var(--ink);
+    padding-top: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Article Grid */
+  .articles-section { padding: 2.5rem 0; }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .article-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .article-card:hover {
+    box-shadow: 4px 6px 0 0 var(--border-strong);
+    transform: translate(-2px, -2px);
+  }
+  .card-visual {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cv-math { background: #1c2b4a; }
+  .cv-history { background: #2a1f14; }
+  .cv-tech { background: #0f2a2a; }
+  .cv-brain { background: #1f0a2a; }
+  .cv-lang { background: #1a2a10; }
+  .cv-space { background: #050a1a; }
+  .card-body { padding: 1.25rem 1.5rem 1.5rem; }
+  .card-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    margin: 0.5rem 0 0.6rem;
+  }
+  .card-body p {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .card-footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Quote Banner */
+  .quote-banner {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin: 0;
+  }
+  .quote-banner blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-style: italic;
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    line-height: 1.4;
+    color: #e8d9c0;
+  }
+  .quote-banner cite {
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-style: normal;
+  }
+
+  /* Long-form section */
+  .longform-section { padding: 2.5rem 0; border-top: 1px solid var(--border); }
+  .longform-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+  }
+  @media (max-width: 720px) { .longform-grid { grid-template-columns: 1fr; } }
+  .longform-card {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+  .longform-card:last-child { border-bottom: none; margin-bottom: 0; }
+  .lf-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--border-strong);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2.5rem;
+    text-align: right;
+  }
+  .lf-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  .lf-content p { font-size: 14px; color: var(--ink-muted); }
+
+  /* Sidebar */
+  .sidebar-widget {
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .sidebar-widget h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--border-strong);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .topic-pill {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 4px;
+    background: var(--paper-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .topic-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .fact-item {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .fact-item:last-child { border-bottom: none; }
+  .fact-item strong { color: var(--accent); font-family: 'Playfair Display', serif; }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    margin-top: 0;
+  }
+  footer span { color: #e88a5b; }
+  </style>
+</head>
+
+<body>
+
+<header class="masthead">
+  <p class="masthead-label">Est. 2025 · Knowledge for Every Mind</p>
+  <h1>Curious <em>Minds</em></h1>
+  <p class="masthead-sub">
+    Science &nbsp;*&nbsp; Mathematics &nbsp;*&nbsp; History &nbsp;*&nbsp; Technology &nbsp;*&nbsp; Culture</p>
+</header>
+
+<nav class="nav-strip">
+  <a href="#">Home</a>
+  <a href="#">Science</a>
+  <a href="#">Mathematics</a>
+  <a href="#">History</a>
+  <a href="#">Technology</a>
+  <a href="#">Culture</a>
+  <a href="#">Deep Dives</a>
+</nav>
+
+
+<!-- Article Cards Grid -->
+<section class="articles-section">
+  <div class="container">
+    <h2 class="section-title">Latest Articles</h2>
+    <div class="grid-3">
+
+      <article class="article-card">
+
+        <div class="card-visual cv-math">
+          <svg width="120" height="100" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+            <text x="10" y="35" fill="#90caf9" font-size="14" font-family="monospace">∫₀^∞ e⁻ˣ dx</text>
+            <text x="30" y="55" fill="#f48fb1" font-size="11" font-family="monospace">= Γ(n+1)</text>
+            <line x1="10" y1="65" x2="110" y2="65" stroke="#555" stroke-width="1"/>
+            <text x="20" y="85" fill="#a5d6a7" font-size="12" font-family="monospace">= n!</text>
+          </svg>
+        </div>
+
+        <div class="card-body">
+          <span class="tag tag-math">Mathematics</span>
+          <h3>The Gamma Function: How Factorials Escape Whole Numbers</h3>
+          <p>What happens when you take 2.5 factorial? The surprising answer unlocks one of the most elegant functions in all of mathematics.</p>
+        </div>
+
+        <div class="card-footer">
+          <span>8 min read</span>
+          <a href="#">Read More →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+
+        <div class="card-visual cv-history">
+          <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="20" width="60" height="60" fill="none" stroke="#8d6e63" stroke-width="2" rx="2"/>
+            <line x1="20" y1="50" x2="80" y2="50" stroke="#8d6e63" stroke-width="1"/>
+            <circle cx="50" cy="35" r="8" fill="#a1887f"/>
+            <rect x="35" y="50" width="30" height="30" fill="#795548" rx="1"/>
+            <text x="30" y="20" fill="#d7ccc8" font-size="9" font-family="serif">776 BCE</text>
+          </svg>
+        </div>
+
+        <div class="card-body">
+          <span class="tag tag-history">History</span>
+          <h3>How Ancient Greece Invented the Idea of Democracy — and Why It Almost Failed</h3>
+          <p>Athens in 507 BCE birthed a radical experiment. But early democracy was messy, exclusionary, and nearly destroyed itself within a century.</p>
+        </div>
+
+        <div class="card-footer">
+          <span>10 min read</span>
+          <a href="#">Read More →</a>
+        </div>
+
+      </article>
+
+      <article class="article-card">
+
+        <div class="card-visual cv-tech">
+          <svg width="110" height="100" viewBox="0 0 110 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="30" width="25" height="40" rx="2" fill="#006064" stroke="#00acc1" stroke-width="1"/>
+            <rect x="43" y="20" width="25" height="60" rx="2" fill="#006064" stroke="#00acc1" stroke-width="1"/>
+            <rect x="76" y="10" width="25" height="80" rx="2" fill="#006064" stroke="#00acc1" stroke-width="1"/>
+            <text x="10" y="15" fill="#80deea" font-size="9" font-family="monospace">neurons</text>
+          </svg>
+        </div>
+
+        <div class="card-body">
+          <span class="tag tag-tech">Technology</span>
+          <h3>Neural Networks Explained: Teaching Machines to See, Hear, and Think</h3>
+          <p>How does a computer learn to recognize a cat? We trace the beautiful mathematics from perceptrons to modern transformer architectures.</p>
+        </div>
+
+        <div class="card-footer">
+          <span>15 min read</span>
+          <a href="#">Read More →</a>
+        </div>
+
+      </article>
+
+      <article class="article-card">
+
+        <div class="card-visual cv-brain">
+          <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="45" rx="32" ry="28" fill="none" stroke="#ce93d8" stroke-width="2"/>
+            <path d="M50 20 Q65 30 60 45 Q55 60 50 70" fill="none" stroke="#ce93d8" stroke-width="1.5"/>
+            <path d="M50 20 Q35 30 40 45 Q45 60 50 70" fill="none" stroke="#ce93d8" stroke-width="1.5"/>
+            <circle cx="50" cy="80" r="6" fill="#7b1fa2" stroke="#ce93d8" stroke-width="1"/>
+            <line x1="50" y1="74" x2="50" y2="70" stroke="#ce93d8" stroke-width="1"/>
+            <circle cx="38" cy="38" r="3" fill="#f48fb1"/>
+            <circle cx="62" cy="42" r="3" fill="#80cbc4"/>
+          </svg>
+        </div>
+
+        <div class="card-body">
+          <span class="tag tag-science">Neuroscience</span>
+          <h3>The Sleeping Brain: Why Forgetting Is Essential for Learning</h3>
+          <p>Counterintuitively, memories consolidate during sleep not by preserving everything — but by selectively erasing the unimportant ones.</p>
+        </div>
+
+        <div class="card-footer">
+          <span>9 min read</span>
+          <a href="#">Read More →</a>
+        </div>
+
+      </article>
+
+      <article class="article-card">
+
+        <div class="card-visual cv-lang">
+          <svg width="110" height="100" viewBox="0 0 110 100" xmlns="http://www.w3.org/2000/svg">
+            <text x="15" y="30" fill="#a5d6a7" font-size="16" font-family="serif">言語</text>
+            <text x="55" y="30" fill="#80cbc4" font-size="14" font-family="serif">γλώσσα</text>
+            <text x="10" y="55" fill="#fff9c4" font-size="12" font-family="serif">Sprache</text>
+            <text x="55" y="55" fill="#ffcc80" font-size="12" font-family="serif">langue</text>
+            <text x="10" y="80" fill="#b39ddb" font-size="11" font-family="serif">لغة</text>
+            <text x="55" y="80" fill="#ef9a9a" font-size="11" font-family="serif">भाषा</text>
+          </svg>
+        </div>
+
+        <div class="card-body">
+          <span class="tag tag-culture">Linguistics</span>
+          <h3>Does the Language You Speak Change the Way You Think?</h3>
+          <p>Speakers of languages without numbers beyond "many" can't track exact quantities. What else might our mother tongue be hiding from us?</p>
+        </div>
+
+        <div class="card-footer">
+          <span>11 min read</span>
+          <a href="#">Read More →</a>
+        </div>
+
+      </article>
+
+      <article class="article-card">
+
+        <div class="card-visual cv-space">
+          <svg width="110" height="100" viewBox="0 0 110 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="50" r="40" fill="none" stroke="#37474f" stroke-width="1"/>
+            <circle cx="55" cy="50" r="28" fill="none" stroke="#37474f" stroke-width="1"/>
+            
+            <!-- Star field -->
+            <circle cx="20" cy="15" r="1.5" fill="white" opacity="0.8"/>
+            <circle cx="85" cy="20" r="1" fill="white" opacity="0.6"/>
+            <circle cx="10" cy="70" r="1.5" fill="white" opacity="0.9"/>
+            <circle cx="95" cy="75" r="1" fill="white" opacity="0.7"/>
+            <circle cx="55" cy="8" r="1.5" fill="white" opacity="0.8"/>
+            
+            <!-- Planet -->
+            <circle cx="55" cy="50" r="16" fill="#1565c0"/>
+            <ellipse cx="55" cy="50" rx="16" ry="5" fill="none" stroke="#90caf9" stroke-width="2.5" transform="rotate(-20 55 50)"/>
+          </svg>
+        </div>
+
+        <div class="card-body">
+          <span class="tag tag-science">Astronomy</span>
+          <h3>Saturn's Rings Are Disappearing — and We're Watching It Happen in Real Time</h3>
+          <p>In cosmic terms, Saturn's iconic rings are a temporary feature. Scientists now estimate they'll be nearly gone within 100 million years.</p>
+        </div>
+
+        <div class="card-footer">
+          <span>7 min read</span>
+          <a href="#">Read More →</a>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="card-body">
+          <span class="tag tag-math">Mathematics</span>
+          <h3>The Gamma Function: How Factorials Escape Whole Numbers</h3>
+          <p>What happens when you take 2.5 factorial? The surprising answer unlocks one of the most elegant functions in all of mathematics.</p>
+</div>
+
+<!-- Hero -->
+<section class="hero-section">
+  <div class="container">
+ 
+    <div class="hero-grid">
+ 
+      <div class="hero-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          
+          <!-- Quantum wave illustration -->
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#4fc3f7" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          
+          <circle cx="200" cy="150" r="120" fill="url(#glow)"/>
+          
+          <!-- Orbital rings -->
+          <ellipse cx="200" cy="150" rx="130" ry="40" fill="none" stroke="#4fc3f7" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+          <ellipse cx="200" cy="150" rx="90" ry="130" fill="none" stroke="#81c784" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" transform="rotate(60 200 150)"/>
+          <ellipse cx="200" cy="150" rx="90" ry="130" fill="none" stroke="#ce93d8" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" transform="rotate(-60 200 150)"/>
+          
+          <!-- Nucleus -->
+          <circle cx="200" cy="150" r="18" fill="#1a3a6a" stroke="#4fc3f7" stroke-width="2"/>
+          <circle cx="196" cy="147" r="5" fill="#4fc3f7"/>
+          <circle cx="204" cy="153" r="5" fill="#ef9a9a"/>
+          <circle cx="200" cy="148" r="4" fill="#81c784"/>
+          
+          <!-- Electrons -->
+          <circle cx="330" cy="150" r="6" fill="#4fc3f7"/>
+          <circle cx="155" cy="30" r="6" fill="#81c784"/>
+          <circle cx="155" cy="270" r="6" fill="#ce93d8"/>
+          
+          <!-- Decorative formula text -->
+          <text x="30" y="50" fill="#4fc3f7" font-size="13" opacity="0.6" font-family="monospace">ψ(x,t)</text>
+          <text x="300" y="280" fill="#81c784" font-size="13" opacity="0.6" font-family="monospace">E=hν</text>
+          <text x="30" y="280" fill="#ce93d8" font-size="13" opacity="0.6" font-family="monospace">ΔxΔp≥ℏ/2</text>
+          <text x="290" y="50" fill="#ef9a9a" font-size="13" opacity="0.6" font-family="monospace">|ψ⟩</text>
+        </svg>
+      </div>
+ 
+      <div class="hero-text">
+        <span class="tag tag-science">Science</span>
+        <h2>The Strange Beauty of Quantum Mechanics: Why Reality is Weirder Than You Think</h2>
+        <p>At the heart of every atom lies a mystery that puzzled Einstein, enchanted Feynman, and continues to challenge our deepest intuitions about the nature of reality. Quantum mechanics isn't just physics — it's a revolution in how we understand existence itself.</p>
+        <p>From superposition to entanglement, we explore the principles that underpin everything from lasers to the very chemistry of life.</p>
+ 
+        <div class="byline">
+          <span>Dr. Priya Nair</span>
+          <span class="byline-dot">·</span>
+          <span>May 20, 2026</span>
+          <span class="byline-dot">·</span>
+          <span>12 min read</span>
+        </div>
+ 
+        <a href="#" class="read-more">Read Article →</a>
+ 
+      </div>
+    
+    </div>
+  
+  </div>
+</section>
+
+
+<!-- Quote Banner -->
+<div class="quote-banner">
+  <blockquote>"The important thing is not to stop questioning. Curiosity has its own reason for existing."</blockquote>
+  <cite>— Albert Einstein</cite>
+</div>
+
+<!-- Long-form + Sidebar -->
+<section class="longform-section">
+  
+  <div class="container">
+  
+    <div class="longform-grid">
+      <div>
+        <h2 class="section-title">Deep Dives</h2>
+  
+        <div class="longform-card">
+          <div class="lf-number">01</div>
+          <div class="lf-content">
+            <span class="tag tag-math">Mathematics</span>
+            <h3>The Riemann Hypothesis: A $1 Million Problem Unsolved for 165 Years</h3>
+            <p>It governs how prime numbers are distributed — and cracking it would reshape cryptography, physics, and our understanding of infinity.</p>
+            <div class="byline" style="margin-top: 0.5rem;">Vikram Suresh &nbsp;·&nbsp; May 18, 2026 &nbsp;·&nbsp; 18 min read</div>
+          </div>
+        </div>
+  
+        <div class="longform-card">
+          <div class="lf-number">02</div>
+          <div class="lf-content">
+            <span class="tag tag-history">History</span>
+            <h3>The Library of Alexandria: What Was Really Lost — and What Wasn't</h3>
+            <p>History's most famous act of intellectual destruction was actually a slow decline, not a single fire. And much of what we think we lost, we still have.</p>
+            <div class="byline" style="margin-top: 0.5rem;">Amara Osei &nbsp;·&nbsp; May 15, 2026 &nbsp;·&nbsp; 14 min read</div>
+          </div>
+        </div>
+  
+        <div class="longform-card">
+          <div class="lf-number">03</div>
+          <div class="lf-content">
+            <span class="tag tag-science">Biology</span>
+            <h3>CRISPR at 13: How Gene Editing Went from Lab Curiosity to Medical Revolution</h3>
+            <p>From correcting sickle cell disease to engineering drought-resistant crops, we map the remarkable decade since CRISPR-Cas9 became a tool, not just a theory.</p>
+            <div class="byline" style="margin-top: 0.5rem;">Dr. Lin Huang &nbsp;·&nbsp; May 12, 2026 &nbsp;·&nbsp; 20 min read</div>
+          </div>
+        </div>
+ 
+        <div class="longform-card">
+          <div class="lf-number">04</div>
+          <div class="lf-content">
+            <span class="tag tag-tech">Technology</span>
+            <h3>The Physics of Why Your Wi-Fi is Slow — and How to Fix It</h3>
+            <p>Signal interference, diffraction, and the inverse square law: understanding a little physics can dramatically improve your home network.</p>
+            <div class="byline" style="margin-top: 0.5rem;">Marcus Bell &nbsp;·&nbsp; May 10, 2026 &nbsp;·&nbsp; 10 min read</div>
+          </div>
+        </div>
+ 
+      </div>
+
+      <aside>
+        <div class="sidebar-widget">
+          <h4>Browse Topics</h4>
+          <a href="#" class="topic-pill">Physics</a>
+          <a href="#" class="topic-pill">Biology</a>
+          <a href="#" class="topic-pill">Mathematics</a>
+          <a href="#" class="topic-pill">Ancient History</a>
+          <a href="#" class="topic-pill">Technology</a>
+          <a href="#" class="topic-pill">Linguistics</a>
+          <a href="#" class="topic-pill">Neuroscience</a>
+          <a href="#" class="topic-pill">Astronomy</a>
+          <a href="#" class="topic-pill">Philosophy</a>
+          <a href="#" class="topic-pill">Chemistry</a>
+          <a href="#" class="topic-pill">Economics</a>
+          <a href="#" class="topic-pill">Psychology</a>
+        </div>
+
+        <div class="sidebar-widget">
+          <h4>Did You Know?</h4>
+          <div class="fact-item"><strong>Fact 1:</strong> Honey never spoils. Archaeologists found 3,000-year-old honey in Egyptian tombs that was still edible.</div>
+          <div class="fact-item"><strong>Fact 2:</strong> A day on Venus is longer than a year on Venus — it rotates slower than it orbits the Sun.</div>
+          <div class="fact-item"><strong>Fact 3:</strong> The number of possible chess games exceeds the number of atoms in the observable universe.</div>
+        </div>
+
+        <div class="sidebar-widget">
+          <h4>Most Read This Week</h4>
+          <div class="fact-item"><a href="#" style="color: var(--accent); text-decoration: none;">1. The Mathematics Behind Music</a></div>
+          <div class="fact-item"><a href="#" style="color: var(--accent); text-decoration: none;">2. How Maps Shaped Empires</a></div>
+          <div class="fact-item"><a href="#" style="color: var(--accent); text-decoration: none;">3. Why Pluto Lost Its Status</a></div>
+          <div class="fact-item"><a href="#" style="color: var(--accent); text-decoration: none;">4. The Invention of Zero</a></div>
+          <div class="fact-item"><a href="#" style="color: var(--accent); text-decoration: none;">5. Evolution in Real Time</a></div>
+        </div>
+      </aside>
+    
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Curious Minds</span> · Knowledge for Every Mind · Made with curiosity</p>
+</footer>
+
+</body>
+</html>

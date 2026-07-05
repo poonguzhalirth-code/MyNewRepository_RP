@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Collage</title>
+<style>
+    body {
+        margin: 0;
+        padding: 20px;
+        background: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+
+    .collage {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .collage img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .large {
+        grid-column: span 2;
+        grid-row: span 2;
+        height: 510px !important;
+    }
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center;">My Photo Collage using img tag</h2>
+
+<div class="collage">
+    <img src="../media/image/Photo1.jpg" alt="Photo 1" class="large">
+    <img src="../media/image/Photo2.jpg" alt="Photo 2">
+    <img src="../media/image/Photo3.jpg" alt="Photo 3">
+    <img src="../media/image/Photo4.jpg" alt="Photo 4">
+    <img src="../media/image/Photo5.jpg" alt="Photo 5">
+    <img src="../media/image/Photo6.jpg" alt="Photo 6">
+</div>
+
+<h2 style="text-align:center;">My Photo Collage using object tag</h2>
+
+<div class="collage">
+
+    <object data="../media/image/Photo1.jpg"></object>
+    <object data="../media/image/Photo2.jpg"></object>
+    <object data="../media/image/Photo3.jpg"></object>
+    <object data="../media/image/Photo4.jpg"></object>
+    <object data="../media/image/Photo5.jpg"></object>
+    <object data="../media/image/Photo6.jpg"></object>
+</div>
+
+</body>
+</html>
